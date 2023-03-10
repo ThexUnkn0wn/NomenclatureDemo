@@ -1,0 +1,121 @@
+﻿@page
+@model NomenclatureDemo.Pages.CreateArticleModel
+@{
+}
+
+<div class="container">
+    <div class="row">
+        <!-- SideNav -->
+        <div class="col-sm-auto">
+
+            <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
+                <div class="position-sticky">
+                    <div class="list-group list-group-flush mx-3 mt-4">
+                        <a class="list-group-item list-group-item-action py-2 ripple active" asp-page="/CreateArticle">
+                            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Create</span>
+                        </a>
+                        <a class="list-group-item list-group-item-action py-2 ripple" asp-page="/ModifyArticle">
+                            <i class="fas fa-chart-area fa-fw me-3"></i><span>Modify</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <!-- SideNav -->
+
+        <div class="col-xl">
+            <h3> Create new article</h3>
+            <hr />
+            <!-- New article form-->
+            <div class="row">
+                <div class="container">
+                    <!-- TODO ADD Comments-->
+                    <form method="post" onsubmit="displayMsg()">
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <span id="onSubmit" class="text-info">@Model.StatusMessage</span>
+                        <!--Article Name-->
+                        <div class="mb-3 form-group row">
+                            <label asp-for="ArticleViewModel.ArticleVm.Name" class="col-sm-2 control-label">Article name&ast; :</label>
+                            <div class="col-sm-5">
+                                <input type="text" asp-for="ArticleViewModel.ArticleVm.Name" class="form-control" />
+                                <span asp-validation-for="ArticleViewModel.ArticleVm.Name" class="text-danger"></span>
+                            </div>
+                        </div><!--Article Name-->
+                        <!--Article Code-->
+                        <div class="mb-3 form-group row">
+                            <label asp-for="ArticleViewModel.ArticleVm.Code" class="col-sm-2 control-label">Article code&ast; :</label>
+                            <div class="col-sm-5">
+                                <input type="text" asp-for="ArticleViewModel.ArticleVm.Code" class="form-control" />
+                                <span asp-validation-for="ArticleViewModel.ArticleVm.Code" class="text-danger"></span>
+                            </div>
+                        </div><!--Article Code-->
+                        <!--Article state-->
+                        <div class="mb-3 form-group row">
+                            <label asp-for="ArticleViewModel.ArticleVm.State" class="col-sm-2 control-label">Article state&ast; :</label>
+                            <div class="col-sm-2">
+                                <select class="form-select" asp-for="ArticleViewModel.ArticleVm.State">
+                                    <option value="INACTIVE">INACTIVE</option>
+                                    <option value="ACTIVE">ACTIVE</option>
+                                </select>
+                            </div>
+                        </div><!--Article state-->
+                        <!--TVA-->
+                        <div class="mb-3 form-group row">
+                            <label asp-for="ArticleViewModel.ArticlePropertysVm.TVA" class="col-sm-2 control-label">TVA%&ast; :</label>
+                            <div class="col-sm-2">
+                                <input type="number" step="any" asp-for="ArticleViewModel.ArticlePropertysVm.TVA" class="form-control" />
+                            </div>
+                            <span asp-validation-for="ArticleViewModel.ArticlePropertysVm.TVA" class="text-danger"></span>
+                        </div><!--TVA-->
+                        <!--Acqusition price-->
+                        <div class="mb-3 form-group row">
+                            <label asp-for="ArticleViewModel.ArticlePropertysVm.Acquisition_Price" class="col-sm-2 control-label">Acquisition price :</label>
+                            <div class="col-sm-2">
+                                <input type="number" step="any" asp-for="ArticleViewModel.ArticlePropertysVm.Acquisition_Price" class="form-control" />
+                            </div>
+                            <span asp-validation-for="ArticleViewModel.ArticlePropertysVm.Acquisition_Price" class="text-danger"></span>
+                        </div><!--Acqusition price-->
+
+
+                        <div class="my-3">
+                            <p>Valability period :</p>
+                        </div>
+                        <!--Valability start date-->
+                        <div class="mb-3 form-group row">
+                            <label asp-for="ArticleViewModel.ArticlePropertysVm.Start_Date" class="col-sm-2 control-label">Start date :</label>
+                            <div class="col-sm-2">
+                                <input type="date" asp-for="ArticleViewModel.ArticlePropertysVm.Start_Date" class="form-control" />
+                            </div>
+                            <span asp-validation-for="ArticleViewModel.ArticlePropertysVm.Start_Date" class="text-danger"></span>
+                        </div><!--Valability start date-->
+                        <!--Valability end date-->
+                        <div class="mb-3 form-group row">
+                            <label asp-for="ArticleViewModel.ArticlePropertysVm.End_Date" class="col-sm-2 control-label">End date :</label>
+                            <div class="col-sm-2">
+                                <input type="date" asp-for="ArticleViewModel.ArticlePropertysVm.End_Date" class="form-control" />
+                            </div>
+                            <span asp-validation-for="ArticleViewModel.ArticlePropertysVm.End_Date" class="text-danger"></span>
+                        </div><!--Valability end date-->
+
+                        <br/>
+                        <hr/>
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary">Create</button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+            <!-- New article form-->
+            
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function displayMsg() {
+        document.getElementById("onSubmit").textContent = "Processing request...";
+    }
+</script>

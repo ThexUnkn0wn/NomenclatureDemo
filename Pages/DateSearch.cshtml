@@ -1,0 +1,102 @@
+﻿@page
+@model NomenclatureDemo.Pages.SearchModel
+@{
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-auto">
+            <!-- Sidebar -->
+            <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
+                <div class="position-sticky">
+                    <div class="list-group list-group-flush mx-3 mt-4">
+                        <a class="list-group-item list-group-item-action py-2 ripple" asp-page="/Browse">
+                            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Browse</span>
+                        </a>
+                        <a class="list-group-item list-group-item-action py-2 ripple active" asp-page="/DateSearch">
+                            <i class="fas fa-chart-area fa-fw me-3"></i><span>History</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+            <!-- Sidebar -->
+        </div>
+        <div class="col-xl">
+            <h3>History</h3>
+        
+        <hr/>
+        <!-- Search Filters -->
+        <form method="post">
+            <div class="row">
+                <div class="container">
+                    <!--Search Date-->
+                    <div class="mb-3 form-group row">
+                         <label asp-for="DateFilter" class="col-sm-2 control-label">Articles active at :</label>
+                         <div class="col-sm-auto">
+                             <input type="date" asp-for="DateFilter" class="form-control" />
+                         </div>
+                    </div>
+                    <!--Search Date-->
+
+                    <!--Orderby-->
+                    <div class="mb-3 form-group row">
+                            <label asp-for="OrderBy" class="col-sm-2 control-label">Order by :</label>
+                        <div class="col-sm-2">
+                                <select class="form-select" asp-for="OrderBy">
+                                    <option value="Id">Id</option>
+                                    <option value="Name">Name</option>
+                                    <option value="Code">Code</option>
+                                    <option value="Acqu.Price">Acqu.Price</option>
+                                    <option value="Price">Price</option>
+                                </select>
+                        </div>
+                    </div>
+                    <!--Orderby-->
+
+                    <button type="submit" class="btn btn-primary">Search</button>
+
+                </div>
+            </div>
+        </form>
+        <!-- Search Filters -->
+            <hr />
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Code</th>
+                        <th>Acqu.Price</th>
+                        <th>TVA</th>
+                        <th>Full Price</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var article in Model.articleViewModel)
+                    {
+                        string bgColor = "grey";
+                        @if (article.ArticleVm.State == "ACTIVE") bgColor = "green";
+                        <tr class="text-light" style=" background-color:@bgColor">
+                            <!-- Article -->
+                            <td>@article.ArticleVm.Id</td>
+                            <td>@article.ArticleVm.Name</td>
+                            <td>@article.ArticleVm.Code</td>
+                            <!-- Article -->
+                            <!-- ArticlePropertys -->
+                            <td>@article.ArticlePropertysVm.Acquisition_Price?.ToString("N2") &euro;</td>
+                            <td>@Html.DisplayFor(a => article.ArticlePropertysVm.TVA)</td>
+                            <td>@article.ArticlePropertysVm.Full_Price?.ToString("N2") &euro;</td>
+                            <td>@article.ArticlePropertysVm.Start_Date?.ToString("dd-MM-yyyy")</td>
+                            <td>@article.ArticlePropertysVm.End_Date?.ToString("dd-MM-yyyy")</td>
+                            <!-- ArticlePropertys -->
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

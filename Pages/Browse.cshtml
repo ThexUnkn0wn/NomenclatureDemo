@@ -1,0 +1,110 @@
+﻿@page
+@model NomenclatureDemo.Pages.BrowseModel
+@{
+}
+
+<div class="container">
+    <div class="row">
+        <!-- SideNav -->
+        <div class="col-sm-auto">
+            
+            <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
+                <div class="position-sticky">
+                    <div class="list-group list-group-flush mx-3 mt-4">
+                        <a class="list-group-item list-group-item-action py-2 ripple active" asp-page="/Browse">
+                            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Browse</span>
+                        </a>
+                        <a class="list-group-item list-group-item-action py-2 ripple" asp-page="/DateSearch">
+                            <i class="fas fa-chart-area fa-fw me-3"></i><span>History</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <!-- SideNav -->
+
+        <div class="col-xl">
+            <h3> Browse articles</h3>
+            <hr />
+            <!-- Search Filters -->
+            <form method="post">
+                <div class="row">
+                    <div class="container">
+                        <div class="mb-3 form-group row">
+                            <label asp-for="SearchValue" class="col-sm-2 control-label">Search :</label>
+                            <div class="col-sm-5">
+                                <input asp-for="SearchValue" class="form-control" type="text" placeholder="Search by article Name, ID or Code" />
+                                <span asp-validation-for="SearchValue" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="mb-3 form-group row">
+                            <label asp-for="StateFilter" class="col-sm-2 control-label">Article state :</label>
+                            <div class="col-sm-auto">
+                                <select class="form-select" asp-for="StateFilter">
+                                    <option value="ALL">ALL</option>
+                                    <option value="INACTIVE">INACTIVE</option>
+                                    <option value="ACTIVE">ACTIVE</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                        <button type="submit" class="mb-3 btn btn-primary">Search</button>
+               
+                <!-- Search Filters -->
+                <hr />
+                <div class="row">
+                    <input type="hidden" asp-for="Direction" />
+                    <div class="col">
+                        <button type="submit" class="mb-2 btn btn-primary btn-sm" asp-page-handler="Prev">&lt;&lt;Prev</button>
+                    </div>
+                    <div class="col-md-auto text-right">
+                        <button type="submit" class="mb-2 btn btn-primary btn-sm" asp-page-handler="Next">Next&gt;&gt;</button>
+                    
+                </div>
+            </form>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Code</th>
+                        <th>Acqu.Price</th>
+                        <th>TVA</th>
+                        <th>Full Price</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var article in Model.articleViewModel)
+                    {string bgColor = "grey";
+                        @if (article.ArticleVm.State == "ACTIVE") bgColor = "green";
+                        <tr class="text-light" style=" background-color:@bgColor">
+                            <!-- Article -->
+                            <td>@article.ArticleVm.Id</td>
+                            <td>@article.ArticleVm.Name</td>
+                            <td>@article.ArticleVm.Code</td>
+                            <!-- Article -->
+
+                            <!-- ArticlePropertys -->
+                            <td>@article.ArticlePropertysVm.Acquisition_Price?.ToString("N2") &euro;</td>
+                            <td>@Html.DisplayFor(a => article.ArticlePropertysVm.TVA)</td>
+                            <td>@article.ArticlePropertysVm.Full_Price?.ToString("N2") &euro;</td>
+                            <td>@article.ArticlePropertysVm.Start_Date?.ToString("dd-MM-yyyy")</td>
+                            <td>@article.ArticlePropertysVm.End_Date?.ToString("dd-MM-yyyy")</td>
+                            <!-- ArticlePropertys -->
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
